@@ -45,7 +45,7 @@ namespace EchoTool
                 foreach (Match argument in argsMatches)
                 {
                     var argSwitch = Regex.Match(argument.Value, @"/\w*").Value.Trim();
-                    var argData = Regex.Match(argument.Value, @"\s([\w|\s]*)$").Value.Trim();
+                    var argData = Regex.Match(argument.Value, @"\s([\w|\s|\W]*)$").Value.Trim();
                     
                     // Save it to the args dict.
                     _argumentsDictionary.Add(argSwitch, string.IsNullOrWhiteSpace(argData) ? string.Empty : argData);

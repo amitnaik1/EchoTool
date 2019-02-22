@@ -86,11 +86,13 @@ namespace EchoTool.Protocols
         {
             IPEndPoint serverEndPoint;
             var receiveBuffer = new byte[4096];
+
             var loopCount = (RepeatCount == 0) ? 1 : RepeatCount - 1;
 
             // Resolve server IP end point
             _clientRunning = GetHostnameEndPoint(out serverEndPoint);
 
+            
             if (_clientRunning)
             {
                 try
@@ -106,32 +108,53 @@ namespace EchoTool.Protocols
                         ReadTimeout = ResponseTimeout * 1000,
                         WriteTimeout = ResponseTimeout * 1000
                     };
+                    
 
                     #region Main Loop
                     while (_clientRunning && loopCount >= 0)
                     {
-                        // Send data
-                        networkStream.Write(EchoPattern, 0, EchoPattern.Length);
-
-                        // Get the start time
-                        var echoStart = DateTime.Now;
-
-                        // Read the data
-                        var bytesRead = networkStream.Read(receiveBuffer, 0, receiveBuffer.Length);
-                        var receivedData = new byte[bytesRead];
-                        Array.Copy(receiveBuffer, receivedData, bytesRead);
-
-                        // Raise event if registered
-                        if (OnEchoResponse != null)
+                        // Send File conten or the echo string
+                        if (!string.IsNullOrEmpty(FilePath))
                         {
-                            var echoTime = DateTime.Now - echoStart;
-                            OnEchoResponse(serverEndPoint, echoTime, Utils.CompareByteArrays(EchoPattern, receivedData));
+                            //Send file content
+                            loopCount = -1;
+                            using (FileStream fs = File.Open(FilePath, FileMode.Open))
+                            {
+                                byte[] b = new byte[1024];
+
+                                int n = 0;
+                                while ((n = fs.Read(b, 0, b.Length)) > 0)
+                                {
+                                    networkStream.Write(b, 0, n);
+                                }
+                            }
+
                         }
+                        else
+                        {
+                                // Send data
+                                networkStream.Write(EchoPattern, 0, EchoPattern.Length);
+                       
+                            // Get the start time
+                            var echoStart = DateTime.Now;
 
-                        // Infinite test
-                        if (RepeatCount > 0)
-                            loopCount--;
+                            // Read the data
+                            var bytesRead = networkStream.Read(receiveBuffer, 0, receiveBuffer.Length);
+                            var receivedData = new byte[bytesRead];
+                            Array.Copy(receiveBuffer, receivedData, bytesRead);
 
+                            // Raise event if registered
+                            if (OnEchoResponse != null)
+                            {
+                                var echoTime = DateTime.Now - echoStart;
+                                OnEchoResponse(serverEndPoint, echoTime, Utils.CompareByteArrays(EchoPattern, receivedData));
+                            }
+
+                            // Infinite test
+                            if (RepeatCount > 0)
+                                loopCount--;
+
+                        }
                         Thread.Sleep(100);
                     }
                     #endregion
@@ -281,6 +304,11 @@ namespace EchoTool.Protocols
         /// Pattern for echo
         /// </summary>
         public byte[] EchoPattern { get; set; }
+
+        /// <summary>
+        /// File path
+        /// </summary>
+        public string FilePath { get ; set; } 
 
         #endregion
 

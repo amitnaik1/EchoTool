@@ -28,6 +28,7 @@ namespace EchoTool.Modes
         const int LocalPort = 0;
         const int RepeatCount = 5;
         const int Timeout = 5;
+        const string FilePath = "";
 
         #region Fields
 
@@ -37,7 +38,7 @@ namespace EchoTool.Modes
         int _repeatCount = RepeatCount;
         int _responseTimeout = Timeout;
         string _echoPattern = string.Empty;
-
+        string _filePath = string.Empty;
         int _echoReceived, _echoCorrupted;
         #endregion
 
@@ -60,7 +61,7 @@ namespace EchoTool.Modes
             var strLocalPort = _arguments.GetNotExists("/l", LocalPort.ToString());
             var strRepeatCount = _arguments.GetNotExists("/n", RepeatCount.ToString());
             var strTimeout = _arguments.GetNotExists("/t", Timeout.ToString());
-
+            var strFilePath = _arguments.GetNotExists("/f", FilePath);
             _echoPattern = _arguments.Get("/d", string.Empty);
 
             if (Utils.IsNumber(strRemotePort))
@@ -83,6 +84,8 @@ namespace EchoTool.Modes
             else
                 return false;
 
+            _filePath = strFilePath;
+
             if (_remotePort > 65535 || _localPort > 65535)
                 return false;
 
@@ -103,7 +106,9 @@ namespace EchoTool.Modes
                 ResponseTimeout = _responseTimeout
             };
 
-            if (! string.IsNullOrEmpty(_echoPattern))
+            if (!string.IsNullOrEmpty(_filePath))
+                echoClient.FilePath = _filePath;
+            else if (! string.IsNullOrEmpty(_echoPattern))
                 echoClient.EchoPattern = Encoding.ASCII.GetBytes(_echoPattern);
 
 
