@@ -1,9 +1,0 @@
-D:\github\EchoTool\EchoTool\bin\Debug\echotool.exe.config
-D:\github\EchoTool\EchoTool\bin\Debug\echotool.exe
-D:\github\EchoTool\EchoTool\bin\Debug\echotool.pdb
-D:\github\EchoTool\EchoTool\obj\Debug\EchoTool.csprojAssemblyReference.cache
-D:\github\EchoTool\EchoTool\obj\Debug\EchoTool.Resources.Messages.resources
-D:\github\EchoTool\EchoTool\obj\Debug\EchoTool.csproj.GenerateResource.cache
-D:\github\EchoTool\EchoTool\obj\Debug\EchoTool.csproj.CoreCompileInputs.cache
-D:\github\EchoTool\EchoTool\obj\Debug\echotool.exe
-D:\github\EchoTool\EchoTool\obj\Debug\echotool.pdb

@@ -1,7 +1,0 @@
-D:\github\EchoTool\EchoTool\bin\Release\echotool.exe.config
-D:\github\EchoTool\EchoTool\bin\Release\echotool.exe
-D:\github\EchoTool\EchoTool\obj\Release\EchoTool.Resources.Messages.resources
-D:\github\EchoTool\EchoTool\obj\Release\EchoTool.csproj.GenerateResource.cache
-D:\github\EchoTool\EchoTool\obj\Release\EchoTool.csproj.CoreCompileInputs.cache
-D:\github\EchoTool\EchoTool\obj\Release\echotool.exe
-D:\github\EchoTool\EchoTool\obj\Release\EchoTool.csprojAssemblyReference.cache
