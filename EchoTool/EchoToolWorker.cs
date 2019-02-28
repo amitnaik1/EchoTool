@@ -102,7 +102,7 @@ namespace EchoTool
         /// </summary>
         private void ShowHelp()
         {            
-            Console.WriteLine("Usage: echotool [target_name] [/p protocol] [/s listen_port] [/r remote_port]\n[/l local_port] [/n count] [/t timeout] [/d echo_pattern] [/f [file_path]]\n");
+            Console.WriteLine("Usage: echotool [target_name] [/p protocol] [/s listen_port] [/r remote_port]\n[/l local_port] [/n count] [/t timeout] [/d echo_pattern] [/f file_path] [/b packet_size]\n");
             Console.WriteLine("Options:");            
             Console.WriteLine("\t/p protocol\t tcp or udp");
             Console.WriteLine("\t/s [port]\t Server mode on specified port");
@@ -112,6 +112,7 @@ namespace EchoTool
             Console.WriteLine("\t/t timeout\t Timeout in seconds");
             Console.WriteLine("\t/d pattern\t Pattern to be sent for echo");
             Console.WriteLine("\t/f filepath\t File to be sent to the server");
+            Console.WriteLine("\t/b file packet size in bytes to be sent");
         }
     }
 }

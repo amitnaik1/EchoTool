@@ -113,14 +113,14 @@ namespace EchoTool.Protocols
                     #region Main Loop
                     while (_clientRunning && loopCount >= 0)
                     {
-                        // Send File conten or the echo string
+                        // Send File content or the echo string
                         if (!string.IsNullOrEmpty(FilePath))
                         {
                             //Send file content
                             loopCount = -1;
                             using (FileStream fs = File.Open(FilePath, FileMode.Open))
                             {
-                                byte[] b = new byte[1024];
+                                byte[] b = new byte[PacketLen];
 
                                 int n = 0;
                                 while ((n = fs.Read(b, 0, b.Length)) > 0)
@@ -309,6 +309,11 @@ namespace EchoTool.Protocols
         /// File path
         /// </summary>
         public string FilePath { get ; set; } 
+
+        /// <summary>
+        /// Packet Length
+        /// </summary>
+        public int PacketLen { get; set; }
 
         #endregion
 

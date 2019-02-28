@@ -29,6 +29,7 @@ namespace EchoTool.Modes
         const int RepeatCount = 5;
         const int Timeout = 5;
         const string FilePath = "";
+        const int PacketLen = 1024;
 
         #region Fields
 
@@ -40,6 +41,7 @@ namespace EchoTool.Modes
         string _echoPattern = string.Empty;
         string _filePath = string.Empty;
         int _echoReceived, _echoCorrupted;
+        int _packetLen = PacketLen;
         #endregion
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace EchoTool.Modes
             var strRepeatCount = _arguments.GetNotExists("/n", RepeatCount.ToString());
             var strTimeout = _arguments.GetNotExists("/t", Timeout.ToString());
             var strFilePath = _arguments.GetNotExists("/f", FilePath);
+            var strPacketLen = _arguments.GetNotExists("/b", FilePath);
             _echoPattern = _arguments.Get("/d", string.Empty);
 
             if (Utils.IsNumber(strRemotePort))
@@ -81,6 +84,11 @@ namespace EchoTool.Modes
 
             if (Utils.IsNumber(strTimeout))
                 _responseTimeout = Convert.ToInt32(strTimeout);
+            else
+                return false;
+
+            if (Utils.IsNumber(strPacketLen))
+                _packetLen = Convert.ToInt32(strPacketLen);
             else
                 return false;
 
@@ -107,8 +115,11 @@ namespace EchoTool.Modes
             };
 
             if (!string.IsNullOrEmpty(_filePath))
+            {
                 echoClient.FilePath = _filePath;
-            else if (! string.IsNullOrEmpty(_echoPattern))
+                echoClient.PacketLen = _packetLen;
+            }
+            else if (!string.IsNullOrEmpty(_echoPattern))
                 echoClient.EchoPattern = Encoding.ASCII.GetBytes(_echoPattern);
 
 
